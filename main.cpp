@@ -24,6 +24,17 @@ TreeNode* insert(TreeNode* root, int val) {
     return root;
 }
 
+// Delete tree nodes to prevent memory leak
+void deleteTree(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+    
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}
+
 // Find kth largest element using reverse inorder traversal
 int kthLargest(TreeNode* root, int& cnt) {
     if (root == nullptr) {
@@ -64,6 +75,9 @@ int main() {
     // Find kth largest element
     int result = kthLargest(root, cnt);
     cout << result << endl;
+    
+    // Clean up memory
+    deleteTree(root);
     
     return 0;
 }
